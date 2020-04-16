@@ -1,10 +1,10 @@
-%  +----------------------------------------------------------------+
-%  | Author: Bernardo G.P. Cunha                                    |
-%  | Function Name: ovcr (optimized VRC)                                            |
-%  | Function Purpose: represent the combinational circuit testbench|
-%  | Inputs: Genotype, Number of Input Bits, Truth table (ref), security code              |
-%  | Output: Fitness value, Number of logic gates                   |
-%  +----------------------------------------------------------------+
+%  +----------------------------------------------------------------------------+
+%  | Author: Bernardo G.P. Cunha                                                |
+%  | Function Name: ovcr (optimized VRC)                                        |
+%  | Function Purpose: represent the combinational circuit testbench            |
+%  | Inputs: Genotype, Number of Input Bits, Truth table (ref), security code   |
+%  | Output: Fitness value, Number of logic gates                               |
+%  +----------------------------------------------------------------------------+
 function [fitness,ngates] = ovrc(genotype,nbits,ref,code)
 gen_in = genotype;
 tt = ref;
