@@ -1,0 +1,84 @@
+
+-- Quartus II VHDL Template
+-- Signed Adder
+
+library ieee;
+use ieee.std_logic_1164.all;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity elitism is
+
+generic
+(
+	BIT_SEQUENCE : natural := 3;
+	GATES        : natural := 5;
+	PHEN         : natural := 4;
+ 	VECTOR       : natural := 22
+);
+
+	port 
+	(
+		clk            : in  STD_LOGIC;
+		phenotype      : in STD_LOGIC_VECTOR(PHEN-1 downto 0);
+		fitness        : in  STD_LOGIC_VECTOR(BIT_SEQUENCE-1 downto 0);
+		genotype       : in  STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+		gates_1        : in  STD_LOGIC_VECTOR(GATES-1 downto 0);
+		phenotype_best : out STD_LOGIC_VECTOR(PHEN-1 downto 0);
+		fit_best       : out STD_LOGIC_VECTOR(BIT_SEQUENCE-1 downto 0);
+	   genotype_best  : out STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+		gates_min      : out STD_LOGIC_VECTOR(GATES-1 downto 0)
+
+	);
+
+end entity;
+
+architecture rtl of elitism is
+
+SIGNAL f1         : STD_LOGIC_VECTOR(BIT_SEQUENCE-1 downto 0):="000";
+SIGNAL g1         : STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+SIGNAL gates_best : STD_LOGIC_VECTOR(GATES-1 downto 0):="10000";
+SIGNAL pheno      : STD_LOGIC_VECTOR(PHEN-1 downto 0);
+SIGNAL count      : INTEGER range 0 to 3; 
+begin
+
+process (clk)
+
+begin
+
+	if(rising_edge(clk)) then
+
+		if (count < 3 ) then
+			count <= count + 1;
+		
+		else		
+		
+			if (fitness > f1) then	
+				f1 <= fitness;
+				g1 <= genotype;
+				gates_best <= gates_1;
+				pheno <= phenotype;
+			
+			elsif (fitness = "100") then	
+			
+				if (gates_1 < gates_best) then
+					
+					f1<= fitness;
+					g1 <= genotype;
+					gates_best <= gates_1;
+					pheno <= phenotype;
+				
+				end if;
+			
+			end if;
+			
+		end if;
+	
+	end if;
+
+end process;
+
+fit_best <= f1;
+genotype_best <= g1;
+gates_min <= gates_best;
+phenotype_best <= pheno;
+end rtl;

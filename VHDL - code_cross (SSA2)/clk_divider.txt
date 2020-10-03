@@ -1,0 +1,54 @@
+
+-- Quartus II VHDL Template
+-- Signed Adder
+
+library ieee;
+use ieee.std_logic_1164.all;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity clk_divider is
+
+generic
+(
+	DIVIDER : natural := 3
+);
+
+	port 
+	(
+		clk_in         : in   STD_LOGIC;
+		clk_out        : out  STD_LOGIC
+	);
+
+end entity;
+
+architecture rtl of clk_divider is
+
+SIGNAL count      : INTEGER range 0 to DIVIDER; 
+SIGNAL clk_assist : STD_LOGIC;
+begin
+
+process (clk_in)
+
+begin
+
+	if(rising_edge(clk_in)) then
+
+		if (count < DIVIDER ) then
+	
+			count <= count + 1;
+			clk_assist <= '0';
+		
+		else		
+		
+			count <= 0;
+			clk_assist <= '1';
+			
+		end if;
+	
+	end if;
+
+end process;
+
+clk_out <= clk_assist;
+
+end rtl;

@@ -1,0 +1,127 @@
+-- Quartus II VHDL Template
+-- Signed Adder
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity gates_count is
+
+	generic
+	(
+		INPUT_NUMBER : natural := 2;
+		LAYER_BITS   : natural := 22 --indica quantos bits tem na camada
+	);
+
+	port 
+	(
+		clk       : in  STD_LOGIC;
+		conf_bits : in  STD_LOGIC_VECTOR((LAYER_BITS-1) downto 0);
+	   ngates_out: out STD_LOGIC_VECTOR(4 downto 0);
+		genotype  : out STD_LOGIC_VECTOR((LAYER_BITS-1) downto 0);
+		teste      : out STD_LOGIC
+		);
+
+end entity;
+
+architecture rtl of gates_count is
+
+SIGNAL NGop1  : integer range 0 to 7;
+SIGNAL NGop2  : integer range 0 to 7;
+SIGNAL NGop3  : integer range 0 to 7;
+SIGNAL NGop4  : integer range 0 to 7;
+SIGNAL NGop5  : integer range 0 to 7;
+SIGNAL NGL2   : integer range 0 to 3;
+SIGNAL NGJ0   : integer range 0 to 1;
+SIGNAL NGJ1   : integer range 0 to 1;
+SIGNAL NGJ2   : integer range 0 to 1;
+SIGNAL NGJ3   : integer range 0 to 1; 
+SIGNAL saida  : integer range 0 to 24;
+signal sum    :  unsigned(4 DOWNTO 0);
+SIGNAL op_mux : STD_LOGIC_VECTOR(2 DOWNTO 0) := conf_bits(LAYER_BITS-3)&conf_bits(LAYER_BITS-2)&conf_bits(LAYER_BITS-1);
+SIGNAL ngates :STD_LOGIC_VECTOR(4 downto 0);
+SIGNAL test : STD_LOGIC:='0';
+
+begin
+
+process (clk)
+
+begin
+
+	if (rising_edge(clk)) then
+		
+		ngates_out <= ngates; 
+		test <= not test;
+		
+	end if;
+
+end process;
+
+	NGJ0 <= 1 when conf_bits(0) = '1' else 0;
+	NGJ1 <= 1 when conf_bits(1) = '1' else 0;
+	NGJ2 <= 1 when conf_bits(2) = '1' else 0;
+	NGJ3 <= 1 when conf_bits(3) = '1' else 0;
+
+   
+   
+	NGop1 <= NGJ0 when conf_bits(4) = '0' AND conf_bits(5) = '0' else
+			   NGJ1 when conf_bits(4) = '0' AND conf_bits(5) = '1' else
+            NGJ2 when conf_bits(4) = '1' AND conf_bits(5) = '0' else
+            NGJ3 when conf_bits(4) = '1' AND conf_bits(5) = '1';
+			 
+	NGop2 <= NGJ0 when conf_bits(6) = '0' AND conf_bits(7) = '0' else
+			   NGJ1 when conf_bits(6) = '0' AND conf_bits(7) = '1' else
+            NGJ2 when conf_bits(6) = '1' AND conf_bits(7) = '0' else
+            NGJ3 when conf_bits(6) = '1' AND conf_bits(7) = '1';
+	
+	NGL2 <=  NGop1+NGop2+1;
+	
+	NGop3 <= 0       when conf_bits(9)  = '0' AND conf_bits(10) =  '0' AND conf_bits(11) = '0' else
+			   NGop2   when conf_bits(9)  = '0' AND conf_bits(10) = '0' AND conf_bits(11) = '1' else
+            NGJ2 	  when conf_bits(9)  = '0' AND conf_bits(10) = '1' AND conf_bits(11) = '0' else
+            NGJ3    when conf_bits(9)  = '0' AND conf_bits(10) = '1' AND conf_bits(11) = '1' else 
+			   0       when conf_bits(9)  = '1' AND conf_bits(10) = '0' AND conf_bits(11) = '0' else
+			   NGop2+1 when conf_bits(9)  = '1' AND conf_bits(10) = '0' AND conf_bits(11) = '1' else
+            NGJ2+1  when conf_bits(9)  = '1' AND conf_bits(10) = '1' AND conf_bits(11) = '0' else
+            NGJ3+1  when conf_bits(9)  = '1' AND conf_bits(10) = '1' AND conf_bits(11) = '1';
+			 
+	NGop4 <= NGJ0 	    when conf_bits(12) = '0' AND conf_bits(13) = '0' AND conf_bits(14) = '0' else
+			   NGJ1 	    when conf_bits(12) = '0' AND conf_bits(13) = '0' AND conf_bits(14) = '1' else
+            NGop1 	 when conf_bits(12) = '0' AND conf_bits(13) = '1' AND conf_bits(14) = '0' else
+            0         when conf_bits(12) = '0' AND conf_bits(13) = '1' AND conf_bits(14) = '1' else 
+			   NGJ0  + 1 when conf_bits(12) = '1' AND conf_bits(13) = '0' AND conf_bits(14) = '0' else
+			   NGJ1  + 1 when conf_bits(12) = '1' AND conf_bits(13) = '0' AND conf_bits(14) = '1' else
+            NGop1 + 1 when conf_bits(12) = '1' AND conf_bits(13) = '1' AND conf_bits(14) = '0' else
+            0         when conf_bits(12) = '1' AND conf_bits(13) = '1' AND conf_bits(14) = '1';
+			
+	NGop5 <= NGL2 + NGop1 + 1 when conf_bits(15) = '0' AND conf_bits(16) = '0' AND conf_bits(17) = '0' AND conf_bits(18) = '0' else
+			   NGL2 + NGop2 + 1 when conf_bits(15) = '0' AND conf_bits(16) = '0' AND conf_bits(17) = '0' AND conf_bits(18) = '1' else
+            NGL2 + NGop1 + 1 when conf_bits(15) = '0' AND conf_bits(16) = '0' AND conf_bits(17) = '1' AND conf_bits(18) = '0' else
+            NGL2 + NGop2 + 1 when conf_bits(15) = '0' AND conf_bits(16) = '0' AND conf_bits(17) = '1' AND conf_bits(18) = '1' else 
+		   	NGL2             when conf_bits(15) = '0' AND conf_bits(16) = '1' AND conf_bits(17) = '0' AND conf_bits(18) = '0' else
+		   	NGL2 + 1         when conf_bits(15) = '0' AND conf_bits(16) = '1' AND conf_bits(17) = '0' AND conf_bits(18) = '1' else
+		   	NGop4            when conf_bits(15) = '0' AND conf_bits(16) = '1' AND conf_bits(17) = '0' AND conf_bits(18) = '0' else
+		   	NGop3            when conf_bits(15) = '0' AND conf_bits(16) = '1' AND conf_bits(17) = '0' AND conf_bits(18) = '1' else
+			   NGL2 + NGop1 + 2 when conf_bits(15) = '1' AND conf_bits(16) = '0' AND conf_bits(17) = '0' AND conf_bits(18) = '0' else
+			   NGL2 + NGop2 + 2 when conf_bits(15) = '1' AND conf_bits(16) = '0' AND conf_bits(17) = '0' AND conf_bits(18) = '1' else
+            NGL2 + NGop1 + 2 when conf_bits(15) = '1' AND conf_bits(16) = '0' AND conf_bits(17) = '1' AND conf_bits(18) = '0' else
+            NGL2 + NGop2 + 2 when conf_bits(15) = '1' AND conf_bits(16) = '0' AND conf_bits(17) = '1' AND conf_bits(18) = '1' else 
+				NGJ0 + NGJ3  + 1 when conf_bits(15) = '1' AND conf_bits(16) = '1' AND conf_bits(17) = '0' AND conf_bits(18) = '0' else
+            NGJ1 + NGJ2  + 1 when conf_bits(15) = '1' AND conf_bits(16) = '1' AND conf_bits(17) = '0' AND conf_bits(18) = '1' else
+            NGJ0 + NGJ1  + 1 when conf_bits(15) = '1' AND conf_bits(16) = '1' AND conf_bits(17) = '1' AND conf_bits(18) = '0' else			   
+				NGJ2 + NGJ3  + 1 when conf_bits(15) = '1' AND conf_bits(16) = '1' AND conf_bits(17) = '1' AND conf_bits(18) = '1';
+				
+   saida <= NGop3 + NGop4 + NGop5 + 2  when op_mux = "000" else
+				NGop3 + NGop4 + NGop5 + 2  when op_mux = "001" else
+				NGop3 + NGop4 + NGop5 + 2  when op_mux = "010" else
+				NGop3 + NGop4 + NGop5 + 2  when op_mux = "011" else
+				NGop5                      when op_mux = "100" else
+				NGop4 + NGop3 + 1          when op_mux = "101" else 
+				NGop5 + 1                  when op_mux = "110" else
+				NGop4 + NGop3 + 1          when op_mux = "111"; 
+	
+	genotype <= conf_bits;
+   sum <=  to_unsigned (saida, ngates'length);	
+	ngates <= std_logic_vector(sum);
+	teste <= test;
+end rtl;

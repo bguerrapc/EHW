@@ -1,0 +1,54 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_Logic_Arith.all;
+entity mutation2 is
+
+generic 
+(
+	BIT_SEQUENCE  : natural := 16; 
+	CONF_SEQUENCE : natural := 22;
+	MUTATION      : natural := 4
+);
+
+  port 
+  (
+    mut_genotype      :  out std_logic_vector (CONF_SEQUENCE-1 downto 0);--copia a entrada, invertendo o bit selecionado
+    clk               :  in  std_logic;
+    bit_mutation      :  in  std_logic_vector(MUTATION downto 0);
+    bit_mutation2      :  in  std_logic_vector(MUTATION downto 0);
+	 genotype_in       :  in  std_logic_vector (CONF_SEQUENCE-1 downto 0)
+  );
+end entity;
+
+architecture rtl of mutation2 is
+
+    signal mutate       : std_logic_vector (CONF_SEQUENCE-1 downto 0);
+    signal mut_position : integer range 0 to 21;
+    signal mut_position2: integer range 0 to 21;
+
+begin
+
+    mut_position <= conv_integer(unsigned(bit_mutation));
+    mut_position2	<= conv_integer(unsigned(bit_mutation2));
+
+	 
+    process (genotype_in, clk, bit_mutation) 
+	 
+	 
+	 begin
+	        
+		  if (rising_edge(clk)) then
+															
+				mutate <= genotype_in; 
+				mutate(mut_position-1) <= NOT genotype_in(mut_position-1);
+				mutate(mut_position2+6) <= NOT genotype_in(mut_position2+6);
+
+				
+
+	     end if;
+		  
+    end process;
+	 
+    mut_genotype <= mutate;
+	 
+end architecture;

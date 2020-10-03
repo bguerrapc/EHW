@@ -1,0 +1,68 @@
+-- Quartus Prime VHDL Template
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity countfit is
+
+	generic
+	(
+		FIT_WIDTH : natural := 3;
+		VECTOR_WIDTH: natural := 4;
+		LAYER_BITS   : natural := 22 --indica quantos bits tem na camada
+	
+	);
+
+	port 
+	(
+		clk       : in  STD_LOGIC;
+		Vec       : in  STD_LOGIC_VECTOR(VECTOR_WIDTH-1 DOWNTO 0);
+		gen_in    : in  STD_LOGIC_VECTOR(LAYER_BITS-1 downto 0);
+		fitness   : out STD_LOGIC_VECTOR((FIT_WIDTH-1) downto 0);
+		gen_out   : out STD_LOGIC_VECTOR(LAYER_BITS-1 downto 0);
+		teste     : out STD_LOGIC 
+
+	);
+
+end entity;
+
+architecture rtl of countfit is
+
+	-- Declare registers to hold intermediate sums
+   signal a,b,c,d: integer range 0 to 1;
+	signal partial_fitness : integer range 0 to VECTOR_WIDTH;
+	signal sum  :  unsigned(0 to FIT_WIDTH-1);
+	SIGNAL test : STD_LOGIC:='0';
+
+
+begin
+
+process (clk)
+
+begin
+
+	if (rising_edge(clk)) then
+
+		fitness <= std_logic_vector(sum);
+		test <= not test;
+				
+	end if;
+	
+end process;
+
+	a <= 1 when Vec(0)   = '1' else 0;
+	b <= 1 when Vec(1)   = '1' else 0;
+	c <= 1 when Vec(2)   = '1' else 0;
+	d <= 1 when Vec(3)   = '1' else 0;
+	
+	-- Generate and store intermediate values in the pipeline
+	partial_fitness <= (a+b+c+d);
+	sum <=  to_unsigned(partial_fitness, sum'length);
+
+	-- Generate and store the last value, the V
+
+	--V <= (sum1+sum2+sum3+sum4);
+	gen_out <= gen_in;
+	teste <= test;
+end rtl;

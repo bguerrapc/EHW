@@ -1,0 +1,65 @@
+library ieee;
+    use ieee.std_logic_1164.all;
+
+entity codemux is
+
+generic
+(
+	MUXINPUTS : natural := 2;
+	INPUTS    : natural := 3
+);
+
+port (
+			clk   : in  std_logic;-- Input clock
+			c1    : in  std_logic_vector (INPUTS-1 downto 0);
+			c2    : in  std_logic_vector (INPUTS-1 downto 0);
+			c3    : in  std_logic_vector (INPUTS-1 downto 0);
+			c4    : in  std_logic_vector (INPUTS-1 downto 0);
+			muxin : in  std_logic_vector(MUXINPUTS-1 downto 0);
+			cout  : out std_logic_vector (INPUTS-1 downto 0)                    
+  );
+end entity;
+
+architecture rtl of codemux is
+    
+signal assist : std_logic_vector (INPUTS-1 downto 0);
+signal c      : std_logic_vector (MUXINPUTS-1  downto 0);
+
+    
+begin
+
+process (clk)
+	
+   begin
+	 
+		if (rising_edge(clk)) then
+		
+			if (muxin = "00") then
+			
+				assist <= c1;
+				c <= "00";
+			
+			elsif (muxin = "01") then
+			
+				assist <= c2;
+				c <= "01";
+				
+			elsif (muxin = "10") then
+			
+				assist <= c3;
+			   c <= "10";
+			
+			elsif (muxin = "11") then
+			
+				assist <= c4;
+			   c <= "11";
+			
+			end if;
+			
+		end if;
+				
+	 end process;
+
+    cout  <= assist;
+ 
+end architecture;

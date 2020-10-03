@@ -1,0 +1,38 @@
+-------------------------------------------------------
+--Baseado no código:
+-- Design Name : lfsr
+-- File Name   : lfsr.vhd
+-- Function    : Linear feedback shift register
+-- Coder       : Deepak Kumar Tala (Verilog)
+-- Translator  : Alexander H Pham (VHDL)
+-------------------------------------------------------
+library ieee;
+    use ieee.std_logic_1164.all;
+
+entity LFSR5 is
+  port (
+    cout   :out std_logic_vector (4 downto 0);-- Output of the counter
+    clk    :in  std_logic                    -- Input rlock
+    --reset  :in  std_logic                     -- Input reset
+  );
+end entity;
+
+architecture rtl of LFSR5 is
+    signal count           :std_logic_vector (4 downto 0):= "00001";
+    signal assist : std_logic;
+	 --signal linear_feedback :std_logic;
+
+begin
+
+    process (clk) begin
+        if (rising_edge(clk)) then
+					assist <= count(0);
+					count(0) <= (count(4)xor count(2))xor assist;
+					count(1) <= assist;
+					count(2) <= count(1);
+					count(3) <= count(2);
+					count(4) <= count(3);
+				end if;
+    end process;
+    cout <= count;
+end architecture;

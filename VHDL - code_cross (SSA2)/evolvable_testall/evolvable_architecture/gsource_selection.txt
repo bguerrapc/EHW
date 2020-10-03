@@ -1,0 +1,101 @@
+-- Quartus II VHDL Template
+-- Signed Adder
+
+library ieee;
+use ieee.std_logic_1164.all;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity gsource_selection is
+
+generic
+(
+VECTOR      : natural := 22;
+GATES       : natural := 5;
+BIT_SEQUENCE: natural := 3;
+MAX_COUNT   : natural := 10
+);
+
+port 
+(
+rst           : in  STD_LOGIC;
+gtip          : in  STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+clk           : in  STD_LOGIC;
+e_genotype    : in  STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+e_fitness     : in  STD_LOGIC_VECTOR(BIT_SEQUENCE-1 downto 0);
+r_genotype    : in  STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+e_gate        : in  STD_LOGIC_VECTOR(GATES-1 downto 0);
+  genotype      : out STD_LOGIC_VECTOR(VECTOR-1 downto 0)
+);
+
+end entity;
+
+architecture rtl of gsource_selection is
+
+SIGNAL g:  STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+SIGNAL count: integer range 0 to 30*MAX_COUNT;
+SIGNAL fittest_count: integer range 0 to 10*MAX_COUNT;
+SIGNAL ofittest_count: integer range 0 to 20*MAX_COUNT;
+signal fit_atual : STD_LOGIC_VECTOR(BIT_SEQUENCE-1 downto 0);
+signal fit_passado : STD_LOGIC_VECTOR(BIT_SEQUENCE-1 downto 0);
+signal gate_atual : STD_LOGIC_VECTOR(GATES-1 downto 0);
+signal gate_passado: STD_LOGIC_VECTOR(GATES-1 downto 0);
+
+begin
+
+process (clk)
+
+begin
+
+if(rising_edge(clk)) then
+
+if(rst = '1')then
+
+	g <= gtip;
+
+else
+
+gate_passado <= gate_atual;	
+fit_passado <= fit_atual;
+gate_atual <= e_gate;
+fit_atual <= e_fitness;
+
+if (gate_passado = gate_atual AND ofittest_count < 20*MAX_COUNT) then
+
+ofittest_count  <= ofittest_count + 1;
+
+else
+
+ofittest_count <= 0;
+
+end if;
+
+if (fit_passado = fit_atual AND fittest_count < 10*MAX_COUNT) then
+
+fittest_count  <= fittest_count + 1;
+
+else
+
+fittest_count <= 0;
+
+end if;
+
+if (e_fitness = "100" AND (fittest_count >= 2*MAX_COUNT OR ofittest_count >= 3*MAX_COUNT	OR count >= 10*MAX_COUNT)) then
+
+g <= e_genotype;
+
+else 
+
+g <= r_genotype;
+ 	count <= count + 1;
+
+end if;
+
+end if;
+
+end if;
+
+end process;
+ 
+genotype <= g;
+ 
+end rtl;

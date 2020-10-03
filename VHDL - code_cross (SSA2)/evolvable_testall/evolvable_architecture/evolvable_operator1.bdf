@@ -1,0 +1,764 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2016  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Intel and sold by Intel or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+*/
+(header "graphic" (version "1.4"))
+(pin
+	(input)
+	(rect -392 152 -224 168)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "clk" (rect 5 0 19 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 848 480 1040 496)
+	(text "INPUT" (rect 149 0 177 10)(font "Arial" (font_size 6)))
+	(text "mutation_conf[1..0]" (rect 5 0 101 12)(font "Arial" ))
+	(pt 192 8)
+	(drawing
+		(line (pt 108 12)(pt 133 12))
+		(line (pt 108 4)(pt 133 4))
+		(line (pt 137 8)(pt 192 8))
+		(line (pt 108 12)(pt 108 4))
+		(line (pt 133 4)(pt 137 8))
+		(line (pt 133 12)(pt 137 8))
+	)
+	(text "VCC" (rect 152 7 172 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 24 240 192 256)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "g[21..0]" (rect 5 0 42 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(output)
+	(rect 1296 416 1472 432)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "genotype[21..0]" (rect 90 0 167 12)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 1296 400 1472 416)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "rep[1..0]" (rect 90 0 128 17)(font "Intel Clear" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(symbol
+	(rect 248 600 624 712)
+	(text "mutation1" (rect 5 0 53 12)(font "Arial" ))
+	(text "inst3" (rect 8 96 30 113)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "bit_mutation[mutation..0]" (rect 0 0 122 12)(font "Arial" ))
+		(text "bit_mutation[mutation..0]" (rect 21 43 143 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "genotype_in[conf_sequence-1..0]" (rect 0 0 165 12)(font "Arial" ))
+		(text "genotype_in[conf_sequence-1..0]" (rect 21 59 186 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 376 32)
+		(output)
+		(text "mut_genotype[conf_sequence-1..0]" (rect 0 0 175 12)(font "Arial" ))
+		(text "mut_genotype[conf_sequence-1..0]" (rect 207 27 382 39)(font "Arial" ))
+		(line (pt 376 32)(pt 360 32)(line_width 3))
+	)
+	(parameter
+		"BIT_SEQUENCE"
+		"16"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"CONF_SEQUENCE"
+		"22"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"MUTATION"
+		"4"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 360 96))
+	)
+	(annotation_block (parameter)(rect 408 520 624 600))
+)
+(symbol
+	(rect 248 392 624 504)
+	(text "mutation1" (rect 5 0 53 12)(font "Arial" ))
+	(text "inst2" (rect 8 96 30 113)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "bit_mutation[mutation..0]" (rect 0 0 122 12)(font "Arial" ))
+		(text "bit_mutation[mutation..0]" (rect 21 43 143 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "genotype_in[conf_sequence-1..0]" (rect 0 0 165 12)(font "Arial" ))
+		(text "genotype_in[conf_sequence-1..0]" (rect 21 59 186 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 376 32)
+		(output)
+		(text "mut_genotype[conf_sequence-1..0]" (rect 0 0 175 12)(font "Arial" ))
+		(text "mut_genotype[conf_sequence-1..0]" (rect 207 27 382 39)(font "Arial" ))
+		(line (pt 376 32)(pt 360 32)(line_width 3))
+	)
+	(parameter
+		"BIT_SEQUENCE"
+		"16"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"CONF_SEQUENCE"
+		"22"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"MUTATION"
+		"6"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 360 96))
+	)
+	(annotation_block (parameter)(rect 408 312 618 388))
+)
+(symbol
+	(rect -152 752 0 832)
+	(text "LFSR4" (rect 5 0 39 12)(font "Arial" ))
+	(text "inst11" (rect 8 64 36 81)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 152 32)
+		(output)
+		(text "cout[3..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "cout[3..0]" (rect 92 27 139 39)(font "Arial" ))
+		(line (pt 152 32)(pt 136 32)(line_width 3))
+	)
+	(parameter
+		"SEED"
+		"0001"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(drawing
+		(rectangle (rect 16 16 136 64))
+	)
+	(annotation_block (parameter)(rect -184 704 0 744))
+)
+(symbol
+	(rect -160 880 -8 960)
+	(text "LFSR4" (rect 5 0 39 12)(font "Arial" ))
+	(text "inst12" (rect 8 64 36 81)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 152 32)
+		(output)
+		(text "cout[3..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "cout[3..0]" (rect 92 27 139 39)(font "Arial" ))
+		(line (pt 152 32)(pt 136 32)(line_width 3))
+	)
+	(parameter
+		"SEED"
+		"1100"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(drawing
+		(rectangle (rect 16 16 136 64))
+	)
+	(annotation_block (parameter)(rect -192 840 -13 878))
+)
+(symbol
+	(rect -136 616 0 696)
+	(text "fixed_position" (rect 5 0 73 12)(font "Arial" ))
+	(text "inst14" (rect 8 64 36 81)(font "Intel Clear" ))
+	(port
+		(pt 136 32)
+		(output)
+		(text "cout[4..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "cout[4..0]" (rect 76 27 123 39)(font "Arial" ))
+		(line (pt 136 32)(pt 120 32)(line_width 3))
+	)
+	(parameter
+		"POSITION"
+		"00001"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(drawing
+		(rectangle (rect 16 16 120 64))
+	)
+	(annotation_block (parameter)(rect -192 576 0 616))
+)
+(symbol
+	(rect -136 408 16 488)
+	(text "LFSR7" (rect 5 0 39 12)(font "Arial" ))
+	(text "inst4" (rect 8 64 30 81)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 152 32)
+		(output)
+		(text "cout[6..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "cout[6..0]" (rect 92 27 139 39)(font "Arial" ))
+		(line (pt 152 32)(pt 136 32)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 136 64))
+	)
+)
+(symbol
+	(rect -136 200 16 280)
+	(text "LFSR5" (rect 5 0 39 12)(font "Arial" ))
+	(text "inst99" (rect 8 64 37 76)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 152 32)
+		(output)
+		(text "cout[4..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "cout[4..0]" (rect 92 27 139 39)(font "Arial" ))
+		(line (pt 152 32)(pt 136 32)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 136 64))
+	)
+)
+(symbol
+	(rect 248 184 624 296)
+	(text "mutation1" (rect 5 0 53 12)(font "Arial" ))
+	(text "inst98" (rect 8 96 37 108)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "bit_mutation[mutation..0]" (rect 0 0 122 12)(font "Arial" ))
+		(text "bit_mutation[mutation..0]" (rect 21 43 143 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "genotype_in[conf_sequence-1..0]" (rect 0 0 165 12)(font "Arial" ))
+		(text "genotype_in[conf_sequence-1..0]" (rect 21 59 186 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 376 32)
+		(output)
+		(text "mut_genotype[conf_sequence-1..0]" (rect 0 0 175 12)(font "Arial" ))
+		(text "mut_genotype[conf_sequence-1..0]" (rect 207 27 382 39)(font "Arial" ))
+		(line (pt 376 32)(pt 360 32)(line_width 3))
+	)
+	(parameter
+		"BIT_SEQUENCE"
+		"16"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"CONF_SEQUENCE"
+		"22"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"MUTATION"
+		"4"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 360 96))
+	)
+	(annotation_block (parameter)(rect 408 104 624 184))
+)
+(symbol
+	(rect 248 808 624 920)
+	(text "mutation2" (rect 5 0 53 12)(font "Arial" ))
+	(text "inst10" (rect 8 96 36 113)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "bit_mutation[mutation..0]" (rect 0 0 122 12)(font "Arial" ))
+		(text "bit_mutation[mutation..0]" (rect 21 43 143 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "bit_mutation2[mutation..0]" (rect 0 0 128 12)(font "Arial" ))
+		(text "bit_mutation2[mutation..0]" (rect 21 59 149 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "genotype_in[conf_sequence-1..0]" (rect 0 0 165 12)(font "Arial" ))
+		(text "genotype_in[conf_sequence-1..0]" (rect 21 75 186 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 376 32)
+		(output)
+		(text "mut_genotype[conf_sequence-1..0]" (rect 0 0 175 12)(font "Arial" ))
+		(text "mut_genotype[conf_sequence-1..0]" (rect 207 27 382 39)(font "Arial" ))
+		(line (pt 376 32)(pt 360 32)(line_width 3))
+	)
+	(parameter
+		"BIT_SEQUENCE"
+		"16"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"CONF_SEQUENCE"
+		"22"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"MUTATION"
+		"3"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 360 96))
+	)
+	(annotation_block (parameter)(rect 408 736 618 812))
+)
+(symbol
+	(rect 1056 376 1272 520)
+	(text "mux1" (rect 5 0 32 12)(font "Arial" ))
+	(text "inst" (rect 8 128 25 140)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "g1[bit_layer-1..0]" (rect 0 0 83 12)(font "Arial" ))
+		(text "g1[bit_layer-1..0]" (rect 21 27 104 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "g2[bit_layer-1..0]" (rect 0 0 83 12)(font "Arial" ))
+		(text "g2[bit_layer-1..0]" (rect 21 43 104 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "g3[bit_layer-1..0]" (rect 0 0 83 12)(font "Arial" ))
+		(text "g3[bit_layer-1..0]" (rect 21 59 104 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "g4[bit_layer-1..0]" (rect 0 0 83 12)(font "Arial" ))
+		(text "g4[bit_layer-1..0]" (rect 21 75 104 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 91 35 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "muxin[parallel-1..0]" (rect 0 0 93 12)(font "Arial" ))
+		(text "muxin[parallel-1..0]" (rect 21 107 114 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112)(line_width 3))
+	)
+	(port
+		(pt 216 32)
+		(output)
+		(text "reply[1..0]" (rect 0 0 50 12)(font "Arial" ))
+		(text "reply[1..0]" (rect 153 27 203 39)(font "Arial" ))
+		(line (pt 216 32)(pt 200 32)(line_width 3))
+	)
+	(port
+		(pt 216 48)
+		(output)
+		(text "gout[21..0]" (rect 0 0 53 12)(font "Arial" ))
+		(text "gout[21..0]" (rect 151 43 204 55)(font "Arial" ))
+		(line (pt 216 48)(pt 200 48)(line_width 3))
+	)
+	(parameter
+		"BIT_LAYER"
+		"22"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"PARALLEL"
+		"2"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 200 128))
+	)
+	(annotation_block (parameter)(rect 1096 312 1272 376))
+)
+(connector
+	(pt 216 216)
+	(pt 248 216)
+)
+(connector
+	(pt 216 424)
+	(pt 248 424)
+)
+(connector
+	(pt 216 840)
+	(pt 248 840)
+)
+(connector
+	(pt 192 664)
+	(pt 248 664)
+	(bus)
+)
+(connector
+	(pt 72 872)
+	(pt 248 872)
+	(bus)
+)
+(connector
+	(pt 216 632)
+	(pt 216 840)
+)
+(connector
+	(pt 216 632)
+	(pt 248 632)
+)
+(connector
+	(pt 248 440)
+	(pt 16 440)
+	(bus)
+)
+(connector
+	(pt 248 648)
+	(pt 0 648)
+	(bus)
+)
+(connector
+	(pt 72 872)
+	(pt 72 784)
+	(bus)
+)
+(connector
+	(pt 0 784)
+	(pt 72 784)
+	(bus)
+)
+(connector
+	(pt 248 856)
+	(pt 16 856)
+	(bus)
+)
+(connector
+	(pt -8 912)
+	(pt 16 912)
+	(bus)
+)
+(connector
+	(pt 16 912)
+	(pt 16 856)
+	(bus)
+)
+(connector
+	(pt 248 232)
+	(pt 16 232)
+	(bus)
+)
+(connector
+	(pt -224 440)
+	(pt -136 440)
+)
+(connector
+	(pt -224 632)
+	(pt 216 632)
+)
+(connector
+	(pt -224 440)
+	(pt -224 632)
+)
+(connector
+	(pt -224 232)
+	(pt -136 232)
+)
+(connector
+	(pt 216 160)
+	(pt -224 160)
+)
+(connector
+	(pt -224 160)
+	(pt -224 232)
+)
+(connector
+	(pt -224 232)
+	(pt -224 440)
+)
+(connector
+	(pt 216 160)
+	(pt 216 216)
+)
+(connector
+	(pt 216 216)
+	(pt 216 424)
+)
+(connector
+	(pt -160 912)
+	(pt -224 912)
+)
+(connector
+	(pt -224 784)
+	(pt -152 784)
+)
+(connector
+	(pt -224 632)
+	(pt -224 784)
+)
+(connector
+	(pt -224 784)
+	(pt -224 912)
+)
+(connector
+	(pt 216 424)
+	(pt 216 496)
+)
+(connector
+	(pt 216 496)
+	(pt 216 632)
+)
+(connector
+	(pt 624 216)
+	(pt 912 216)
+	(bus)
+)
+(connector
+	(pt 912 216)
+	(pt 912 408)
+	(bus)
+)
+(connector
+	(pt 912 408)
+	(pt 1056 408)
+	(bus)
+)
+(connector
+	(pt 840 440)
+	(pt 1056 440)
+	(bus)
+)
+(connector
+	(pt 624 424)
+	(pt 1056 424)
+	(bus)
+)
+(connector
+	(pt 840 632)
+	(pt 624 632)
+	(bus)
+)
+(connector
+	(pt 840 632)
+	(pt 840 440)
+	(bus)
+)
+(connector
+	(pt 872 456)
+	(pt 1056 456)
+	(bus)
+)
+(connector
+	(pt 872 840)
+	(pt 872 456)
+	(bus)
+)
+(connector
+	(pt 624 840)
+	(pt 872 840)
+	(bus)
+)
+(connector
+	(pt 1056 472)
+	(pt 704 472)
+)
+(connector
+	(pt 704 496)
+	(pt 704 472)
+)
+(connector
+	(pt 216 496)
+	(pt 704 496)
+)
+(connector
+	(pt 1056 488)
+	(pt 1040 488)
+	(bus)
+)
+(connector
+	(pt 1272 424)
+	(pt 1296 424)
+	(bus)
+)
+(connector
+	(pt 1272 408)
+	(pt 1296 408)
+	(bus)
+)
+(connector
+	(pt 192 888)
+	(pt 248 888)
+	(bus)
+)
+(connector
+	(pt 192 888)
+	(pt 192 664)
+	(bus)
+)
+(connector
+	(pt 192 456)
+	(pt 248 456)
+	(bus)
+)
+(connector
+	(pt 248 248)
+	(pt 192 248)
+	(bus)
+)
+(connector
+	(pt 192 248)
+	(pt 192 456)
+	(bus)
+)
+(connector
+	(pt 192 456)
+	(pt 192 664)
+	(bus)
+)
+(junction (pt 216 496))
+(junction (pt 216 424))
+(junction (pt 216 632))
+(junction (pt 216 216))
+(junction (pt -224 232))
+(junction (pt -224 440))
+(junction (pt -224 632))
+(junction (pt -224 784))
+(junction (pt 192 456))
+(junction (pt 192 664))
+(text "mutation rate fixed one over thirty-two" (rect -64 176 164 195)(font "Intel Clear" (font_size 8)))
+(text "fixed position, fixed m.rate" (rect 24 608 180 627)(font "Intel Clear" (font_size 8)))
+(text "random position, mutation rate fixed one over a hundred twenty-eight" (rect -192 376 219 395)(font "Intel Clear" (font_size 8)))
+(text "random position, fixed mutation rate one over eight" (rect 16 816 319 835)(font "Intel Clear" (font_size 8)))

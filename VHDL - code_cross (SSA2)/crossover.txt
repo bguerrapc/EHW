@@ -1,0 +1,62 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_Logic_Arith.all;
+entity crossover is
+
+generic 
+(
+	BIT_SEQUENCE  : natural := 4; 
+	CONF_SEQUENCE : natural := 22
+);
+
+  port 
+  (
+    clk             :  in  std_logic;
+    bit_cross       :  in  std_logic_vector(BIT_SEQUENCE-1 downto 0);
+	 g1              :  in  std_logic_vector (CONF_SEQUENCE-1 downto 0);
+	 g2              :  in  std_logic_vector (CONF_SEQUENCE-1 downto 0);
+ 	 cross_genotype1 :  out std_logic_vector (CONF_SEQUENCE-1 downto 0);    
+	 cross_genotype2 :  out std_logic_vector (CONF_SEQUENCE-1 downto 0)    
+  );
+end entity;
+
+architecture rtl of crossover is
+
+    signal crossover1     : std_logic_vector (CONF_SEQUENCE-1 downto 0);
+    signal crossover2     : std_logic_vector (CONF_SEQUENCE-1 downto 0);
+	 signal cross_position : integer range 0 to BIT_SEQUENCE-1;
+	 
+begin
+
+    cross_position <= conv_integer(unsigned(bit_cross));
+	 
+    process (clk) 
+	 
+	 begin
+	        
+		  if (rising_edge(clk)) then
+				
+				for I in 0 to CONF_SEQUENCE-1 loop												
+					
+					if (I < cross_position) then
+						
+						crossover1(I) <= g1(I);
+						crossover2(I) <= g2(I);
+			      
+					else
+						
+						crossover1(I) <= g2(I);
+						crossover2(I) <= g1(I);
+				
+					end if;
+					
+				end loop;
+
+	     end if;
+		  
+    end process;
+	 
+    cross_genotype1 <= crossover1;
+    cross_genotype2 <= crossover2;
+	 
+end architecture;

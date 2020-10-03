@@ -1,0 +1,41 @@
+-- Quartus II VHDL Template
+-- Signed Adder
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity conf is
+
+	generic
+	(
+		INPUT_NUMBER : natural := 10
+	);
+
+	port 
+	(
+		saida0  : out STD_LOGIC_VECTOR((INPUT_NUMBER-1) downto 0);
+		saida1  : out STD_LOGIC_VECTOR((INPUT_NUMBER-1) downto 0);
+		saida2  : out STD_LOGIC_VECTOR((INPUT_NUMBER-1) downto 0);
+		saida3  : out STD_LOGIC_VECTOR((INPUT_NUMBER-1) downto 0)		
+	);
+
+end entity;
+
+architecture rtl of conf is
+
+--=============================================================
+constant zero     : std_logic_vector ( INPUT_NUMBER-1 downto 0 ) := "1110010000" ;
+constant one      : std_logic_vector ( INPUT_NUMBER-1 downto 0 ) := "1110010001" ;
+constant two      : std_logic_vector ( INPUT_NUMBER-1 downto 0 ) := "1110010010" ;
+constant three    : std_logic_vector ( INPUT_NUMBER-1 downto 0 ) := "1110010011" ;
+--=============================================================
+
+begin
+
+	saida0  <= zero;
+	saida1  <= one;
+	saida2  <= two;
+	saida3  <= three;
+	
+end rtl;
+

@@ -1,0 +1,131 @@
+-- Quartus II VHDL Template
+-- Signed Adder
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity vrc is
+
+	generic
+	(
+		INPUT_NUMBER : natural := 2;
+		LAYER_BITS   : natural := 22 --indica quantos bits tem na camada
+	);
+
+	port 
+	(
+		teste     : out STD_LOGIC;   
+		clk       : in  STD_LOGIC;
+		I	       : in  STD_LOGIC_VECTOR((INPUT_NUMBER-1) downto 0);--os bits de entrada para a "emulação"
+		conf_bits : in  STD_LOGIC_VECTOR((LAYER_BITS-1) downto 0);
+		L_out	    : out STD_LOGIC;
+		genotype  : out STD_LOGIC_VECTOR((LAYER_BITS-1) downto 0)
+		);
+
+end entity;
+
+architecture rtl of vrc is
+
+SIGNAL op1 : STD_LOGIC;
+SIGNAL op2 : STD_LOGIC;
+SIGNAL op3 : STD_LOGIC;
+SIGNAL op4 : STD_LOGIC;
+SIGNAL op5 : STD_LOGIC;
+SIGNAL J0  : STD_LOGIC;
+SIGNAL J1  : STD_LOGIC;
+SIGNAL J2  : STD_LOGIC;
+SIGNAL J3  : STD_LOGIC;
+SIGNAL L2  : STD_LOGIC;
+SIGNAL op_mux : STD_LOGIC_VECTOR(2 DOWNTO 0) := conf_bits(LAYER_BITS-3)&conf_bits(LAYER_BITS-2)&conf_bits(LAYER_BITS-1);
+SIGNAL saida : STD_LOGIC;
+SIGNAL test : STD_LOGIC:='0';
+begin
+
+process (clk)
+
+begin
+
+    if (rising_edge(clk)) then    
+
+		L_out <= saida;
+      test <= not test;
+    
+	 end if;
+
+end process;
+
+	J0 <= not I(0) when conf_bits(0) = '1' else I(0);
+	J1 <= not I(1) when conf_bits(1) = '1' else I(1);
+	J2 <= not I(0) when conf_bits(2) = '1' else I(0);
+	J3 <= not I(1) when conf_bits(3) = '1' else I(1);
+
+   
+   
+	op1 <= J0 when conf_bits(4) = '0' AND conf_bits(5) = '0' else
+			 J1 when conf_bits(4) = '0' AND conf_bits(5) = '1' else
+          J2 when conf_bits(4) = '1' AND conf_bits(5) = '0' else
+          J3 when conf_bits(4) = '1' AND conf_bits(5) = '1' else 
+			 'X';
+			 
+	op2 <= J0 when conf_bits(6) = '0' AND conf_bits(7) = '0' else
+			 J1 when conf_bits(6) = '0' AND conf_bits(7) = '1' else
+          J2 when conf_bits(6) = '1' AND conf_bits(7) = '0' else
+          J3 when conf_bits(6) = '1' AND conf_bits(7) = '1' else 
+			 'X';
+	
+	L2 <= op1 AND op2 when conf_bits(8) = '0' else 
+			op1 OR  op2 when conf_bits(8) = '1' else
+			'X';
+	
+	op3 <= '0'     when conf_bits(9)  = '0' AND conf_bits(10) = '0' AND conf_bits(11) = '0' else
+			 op2 	   when conf_bits(9)  = '0' AND conf_bits(10) = '0' AND conf_bits(11) = '1' else
+          J2 	   when conf_bits(9)  = '0' AND conf_bits(10) = '1' AND conf_bits(11) = '0' else
+          J3  	   when conf_bits(9)  = '0' AND conf_bits(10) = '1' AND conf_bits(11) = '1' else 
+			 '1'     when conf_bits(9)  = '1' AND conf_bits(10) = '0' AND conf_bits(11) = '0' else
+			 NOT op2 when conf_bits(9)  = '1' AND conf_bits(10) = '0' AND conf_bits(11) = '1' else
+          NOT J2  when conf_bits(9)  = '1' AND conf_bits(10) = '1' AND conf_bits(11) = '0' else
+          NOT J3  when conf_bits(9)  = '1' AND conf_bits(10) = '1' AND conf_bits(11) = '1' else 
+			 'X';
+			 
+	op4 <= J0 	   when conf_bits(12) = '0' AND conf_bits(13) = '0' AND conf_bits(14) = '0' else
+			 J1 	   when conf_bits(12) = '0' AND conf_bits(13) = '0' AND conf_bits(14) = '1' else
+          op1 	   when conf_bits(12) = '0' AND conf_bits(13) = '1' AND conf_bits(14) = '0' else
+          '0' 	   when conf_bits(12) = '0' AND conf_bits(13) = '1' AND conf_bits(14) = '1' else 
+			 NOT J0  when conf_bits(12) = '1' AND conf_bits(13) = '0' AND conf_bits(14) = '0' else
+			 NOT J1  when conf_bits(12) = '1' AND conf_bits(13) = '0' AND conf_bits(14) = '1' else
+          NOT op1 when conf_bits(12) = '1' AND conf_bits(13) = '1' AND conf_bits(14) = '0' else
+          '1'     when conf_bits(12) = '1' AND conf_bits(13) = '1' AND conf_bits(14) = '1' else
+			 'X';
+	
+	op5 <=   (L2 AND op1)     when conf_bits(15) = '0' AND conf_bits(16) = '0' AND conf_bits(17) = '0' AND conf_bits(18) = '0' else
+			   (L2 AND op2)     when conf_bits(15) = '0' AND conf_bits(16) = '0' AND conf_bits(17) = '0' AND conf_bits(18) = '1' else
+            (L2 OR  op1)     when conf_bits(15) = '0' AND conf_bits(16) = '0' AND conf_bits(17) = '1' AND conf_bits(18) = '0' else
+            (L2 OR  op2)     when conf_bits(15) = '0' AND conf_bits(16) = '0' AND conf_bits(17) = '1' AND conf_bits(18) = '1' else 
+            L2               when conf_bits(15) = '0' AND conf_bits(16) = '1' AND conf_bits(17) = '0' AND conf_bits(18) = '0' else 
+            NOT L2           when conf_bits(15) = '0' AND conf_bits(16) = '1' AND conf_bits(17) = '0' AND conf_bits(18) = '1' else 
+            op4              when conf_bits(15) = '0' AND conf_bits(16) = '1' AND conf_bits(17) = '0' AND conf_bits(18) = '0' else 
+            op3              when conf_bits(15) = '0' AND conf_bits(16) = '1' AND conf_bits(17) = '0' AND conf_bits(18) = '0' else 
+				NOT (L2 AND op1) when conf_bits(15) = '1' AND conf_bits(16) = '0' AND conf_bits(17) = '0' AND conf_bits(18) = '0' else
+			   NOT (L2 AND op2) when conf_bits(15) = '1' AND conf_bits(16) = '0' AND conf_bits(17) = '0' AND conf_bits(18) = '1' else
+            NOT (L2 OR  op1) when conf_bits(15) = '1' AND conf_bits(16) = '0' AND conf_bits(17) = '1' AND conf_bits(18) = '0' else
+            NOT (L2 OR  op2) when conf_bits(15) = '1' AND conf_bits(16) = '0' AND conf_bits(17) = '1' AND conf_bits(18) = '1' else 
+				J0 AND J3        when conf_bits(15) = '1' AND conf_bits(16) = '1' AND conf_bits(17) = '0' AND conf_bits(18) = '0' else
+            J1 AND J2        when conf_bits(15) = '1' AND conf_bits(16) = '1' AND conf_bits(17) = '0' AND conf_bits(18) = '1' else
+            J0 OR  J1        when conf_bits(15) = '1' AND conf_bits(16) = '1' AND conf_bits(17) = '1' AND conf_bits(18) = '0' else			   
+				J2 OR  J3        when conf_bits(15) = '1' AND conf_bits(16) = '1' AND conf_bits(17) = '1' AND conf_bits(18) = '1' else
+			   'X';
+							 
+   saida <= (op3 AND op4) AND op5 when op_mux = "000" else
+				(op3 AND op4) OR  op5 when op_mux = "001" else
+				(op3 OR  op4) AND op5 when op_mux = "010" else
+				(op3 OR  op4) OR  op5 when op_mux = "011" else
+				op5                   when op_mux = "100" else
+				op4 AND op3           when op_mux = "101" else 
+				NOT op5               when op_mux = "110" else
+				op3 OR  op4           when op_mux = "111" else 
+				'X';
+				
+	genotype <= conf_bits;
+	teste <= test;
+end rtl;

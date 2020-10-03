@@ -1,0 +1,55 @@
+-- Quartus II VHDL Template
+-- Vector evaluation VHDL Code
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity evaluate is
+
+generic
+(
+	LAYER_BITS   : natural := 22; --indica quantos bits tem na camada
+	VECTOR : natural := 4
+);
+
+	port 
+	(
+		clk          : in STD_LOGIC;
+		phenotype    : in STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+		truth_table  : in STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+		Vec          : out STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+		gen_in       : in STD_LOGIC_VECTOR(LAYER_BITS-1 downto 0);
+		gen_out      : out STD_LOGIC_VECTOR(LAYER_BITS-1 downto 0);
+		teste         : out STD_LOGIC 
+	);
+
+end entity;
+
+architecture rtl of evaluate is
+
+SIGNAL V  : STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+SIGNAL test : STD_LOGIC:='0';
+
+begin
+
+process (clk,truth_table)
+
+begin
+
+
+	if (rising_edge(clk)) then
+	
+		V <= (phenotype XNOR truth_table);
+		test <= not test;
+				
+	end if;
+	
+end process;
+
+Vec <= V;
+gen_out<= gen_in;
+teste <= test;
+
+end rtl;

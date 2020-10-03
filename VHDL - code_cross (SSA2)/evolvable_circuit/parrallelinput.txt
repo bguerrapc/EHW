@@ -1,0 +1,41 @@
+-- Quartus II VHDL Template
+-- Signed Adder
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity parallelinput is
+
+	generic
+	(
+		INPUT_NUMBER : natural := 2
+	);
+
+	port 
+	(
+		saida0  : out STD_LOGIC_VECTOR((INPUT_NUMBER-1) downto 0);
+		saida1  : out STD_LOGIC_VECTOR((INPUT_NUMBER-1) downto 0);
+		saida2  : out STD_LOGIC_VECTOR((INPUT_NUMBER-1) downto 0);
+		saida3  : out STD_LOGIC_VECTOR((INPUT_NUMBER-1) downto 0)		
+	);
+
+end entity;
+
+architecture rtl of parallelinput is
+
+--=============================================================
+constant zero     : std_logic_vector ( INPUT_NUMBER-1 downto 0 ) := "00" ;
+constant one      : std_logic_vector ( INPUT_NUMBER-1 downto 0 ) := "01" ;
+constant two      : std_logic_vector ( INPUT_NUMBER-1 downto 0 ) := "10" ;
+constant three    : std_logic_vector ( INPUT_NUMBER-1 downto 0 ) := "11" ;
+--=============================================================
+
+begin
+
+	saida0  <= zero;
+	saida1  <= one;
+	saida2  <= two;
+	saida3  <= three;
+	
+end rtl;
+

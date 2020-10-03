@@ -1,0 +1,41 @@
+library ieee;
+    use ieee.std_logic_1164.all;
+
+entity gen_maker4 is
+  port (
+         gtip : in  std_logic_vector (21 downto 0);
+			c1   : in  std_logic_vector (15 downto 0);-- Input lfsr fibonacci
+			c2   : in  std_logic_vector (15 downto 0);-- Input lfsr galois
+			clk  : in  std_logic;-- Input clock
+			cout : out std_logic_vector (21 downto 0)                    
+  );
+end entity;
+
+architecture rtl of gen_maker4 is
+    
+signal assist : std_logic_vector (21 downto 0):= gtip;
+    
+begin
+
+    process (clk) 
+	 
+	 variable i: integer range 0 to 21;
+	 
+	 begin
+	    
+		  if (rising_edge(clk)) then
+			
+		   	for i in 0 to 10 loop
+					
+					assist(i) <= c1(i);
+					assist(i+11) <= not c2(i);
+			
+		   	end loop;
+  	
+		  end if;
+		  
+	 end process;
+
+    cout <= assist;
+
+end architecture;

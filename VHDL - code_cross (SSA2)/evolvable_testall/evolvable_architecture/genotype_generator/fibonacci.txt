@@ -1,0 +1,49 @@
+-------------------------------------------------------
+--Baseado no código:
+-- Design Name : lfsr
+-- File Name   : lfsr.vhd
+-- Function    : Linear feedback shift register
+-- Coder       : Deepak Kumar Tala (Verilog)
+-- Translator  : Alexander H Pham (VHDL)
+-------------------------------------------------------
+library ieee;
+    use ieee.std_logic_1164.all;
+
+entity fibonacci is
+  port (
+    cout   :out std_logic_vector (15 downto 0);-- Output of the counter
+    clk    :in  std_logic                    -- Input rlock
+    --reset  :in  std_logic                     -- Input reset
+  );
+end entity;
+
+architecture rtl of fibonacci is
+    signal count           :std_logic_vector (15 downto 0):= "0000000000000001";
+    signal assist : std_logic;
+	 --signal linear_feedback :std_logic;
+
+begin
+
+    process (clk) begin
+        if (rising_edge(clk)) then
+					assist <= count(0);
+					count(0) <= (((count(15)xor count(13))xor count(12)) xor count(10))xor assist;
+					count(1) <= assist;
+					count(2) <= count(1);
+					count(3) <= count(2);
+					count(4) <= count(3);
+					count(5) <= count(4);
+					count(6) <= count(5);
+					count(7) <= count(6);
+					count(8) <= count(7);
+					count(9) <= count(8);
+					count(10) <= count(9);
+					count(11) <= count(10);
+					count(12) <= count(11);
+					count(13) <= count(12);
+					count(14) <= count(13);
+					count(15) <= count(14);
+				end if;
+    end process;
+    cout <= count;
+end architecture;

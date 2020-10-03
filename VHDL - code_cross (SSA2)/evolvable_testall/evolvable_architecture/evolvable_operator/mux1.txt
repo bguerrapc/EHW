@@ -1,0 +1,67 @@
+library ieee;
+    use ieee.std_logic_1164.all;
+
+entity mux1 is
+
+generic
+(
+	BIT_LAYER : natural := 22;
+	PARALLEL  : natural := 2
+);
+
+port (
+			g1    : in  std_logic_vector (BIT_LAYER-1 downto 0);
+			g2    : in  std_logic_vector (BIT_LAYER-1 downto 0);
+			g3    : in  std_logic_vector (BIT_LAYER-1 downto 0);
+			g4    : in  std_logic_vector (BIT_LAYER-1 downto 0);
+			clk   : in  std_logic;-- Input clock
+			muxin : in  std_logic_vector(PARALLEL-1 downto 0);
+			reply : out std_logic_vector(1 downto 0);
+			gout  : out std_logic_vector (21 downto 0)                    
+  );
+end entity;
+
+architecture rtl of mux1 is
+    
+signal assist : std_logic_vector (21 downto 0);
+signal r      : std_logic_vector (1  downto 0);
+
+    
+begin
+
+process (clk)
+	
+   begin
+	 
+		if (rising_edge(clk)) then
+		
+			if (muxin = "00") then
+			
+				assist <= g1;
+				r <= "00";
+			
+			elsif (muxin = "01") then
+			
+				assist <= g2;
+				r <= "01";
+				
+			elsif (muxin = "10") then
+			
+				assist <= g3;
+			   r <= "10";
+			
+			elsif (muxin = "11") then
+			
+				assist <= g4;
+			   r <= "11";
+			
+			end if;
+			
+		end if;
+				
+	 end process;
+
+    gout  <= assist;
+	 reply <= r;
+	 
+end architecture;

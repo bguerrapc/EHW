@@ -1,0 +1,128 @@
+
+-- Quartus II VHDL Template
+-- Signed Adder
+
+library ieee;
+use ieee.std_logic_1164.all;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity selection4 is
+
+generic
+(
+	BIT_SEQUENCE : natural := 3;
+	GATES        : natural := 6;
+	PHEN         : natural := 4;
+	BEST         : natural := 3;
+	VECTOR       : natural := 22
+);
+
+	port 
+	(
+		clk           : in  STD_LOGIC;
+		phen1         : in  STD_LOGIC_VECTOR(PHEN-1 downto 0);
+		fitness1      : in  STD_LOGIC_VECTOR(BIT_SEQUENCE-1 downto 0);
+		genotype1     : in  STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+		gate1         : in  STD_LOGIC_VECTOR(GATES-1 downto 0);
+		phen2         : in  STD_LOGIC_VECTOR(PHEN-1 downto 0);		
+		fitness2      : in  STD_LOGIC_VECTOR(BIT_SEQUENCE-1 downto 0);
+		genotype2     : in  STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+		gate2         : in  STD_LOGIC_VECTOR(GATES-1 downto 0);
+		phen3         : in  STD_LOGIC_VECTOR(PHEN-1 downto 0);
+		fitness3      : in  STD_LOGIC_VECTOR(BIT_SEQUENCE-1 downto 0);
+		genotype3     : in  STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+		gate3         : in  STD_LOGIC_VECTOR(GATES-1 downto 0);
+		phen4         : in  STD_LOGIC_VECTOR(PHEN-1 downto 0);
+		fitness4      : in  STD_LOGIC_VECTOR(BIT_SEQUENCE-1 downto 0);
+		genotype4     : in  STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+		gate4         : in  STD_LOGIC_VECTOR(GATES-1 downto 0);
+		best_code     : out STD_LOGIC_VECTOR(BEST-1 downto 0);
+		phen_best     : out STD_LOGIC_VECTOR(PHEN-1 downto 0);
+		fit_best      : out STD_LOGIC_VECTOR(BIT_SEQUENCE-1 downto 0);
+	   genotype_best : out STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+		gate_best     : out STD_LOGIC_VECTOR(GATES-1 downto 0)
+	);
+
+end entity;
+
+architecture rtl of selection4 is
+
+SIGNAL fb : STD_LOGIC_VECTOR(BIT_SEQUENCE-1 downto 0):="000";
+SIGNAL gtb: STD_LOGIC_VECTOR(VECTOR-1 downto 0);
+SIGNAL gb : STD_LOGIC_VECTOR(GATES-1 downto 0);
+SIGNAL pb : STD_LOGIC_VECTOR(PHEN-1 downto 0);
+SIGNAL bc : STD_LOGIC_VECTOR(BEST-1 downto 0);
+
+begin
+--==============================Proccess para identificar o melhor até o momento
+
+process (clk)
+
+begin
+
+	if(rising_edge(clk)) then
+
+		if (fitness1 >= fitness2  AND fitness1 >= fitness3 AND fitness1 > fitness4) then
+			fb <= fitness1;
+			gtb <= genotype1;
+			gb <= gate1;
+			pb <= phen1;
+			bc <= "100"; 
+		elsif (fitness2 > fitness1 AND fitness2 >= fitness3 AND fitness2 > fitness4) then
+			fb <= fitness2;
+			gtb <= genotype2;
+			gb <= gate2;
+			pb <= phen2;
+			bc <= "101"; 	
+		elsif (fitness3 > fitness1 AND fitness3 >= fitness2 AND fitness3 > fitness4) then
+			fb <= fitness3;
+			gtb <= genotype3;
+			gb <= gate3;
+			pb <= phen3;
+			bc <= "110"; 
+		else
+			fb <= fitness4;
+			gtb <= genotype4;
+			gb <= gate4;
+			pb <= phen4;
+			bc <= "111";
+
+		end if;
+	
+		if (fb="100") then
+			if (gate1 < gate2 AND gate1 < gate3 AND gate1 < gate4 AND fitness1 = "100") then
+			   fb <= fitness1;
+				gtb <= genotype1;
+				gb <= gate1;
+				pb <= phen1;
+				bc <= "100"; 
+			elsif (gate2 < gate1 AND gate2 < gate3 AND gate2 < gate4 AND fitness2 = "100") then
+			   fb <= fitness2;
+				gtb <= genotype2;
+				gb <= gate2;
+				pb <= phen2;
+				bc <= "101"; 
+			elsif (gate3 < gate1 AND gate3 < gate2 AND gate3 < gate4 AND fitness3 = "100") then
+			   fb <= fitness3;
+				gtb <= genotype3;
+				gb <= gate3;
+				pb <= phen3;
+				bc <= "110"; 
+			elsif (gate4 < gate1 AND gate4 < gate2 AND gate4 < gate3 AND fitness4 = "100") then
+			   fb <= fitness4;
+				gtb <= genotype4;
+				gb <= gate4;	 
+				pb <= phen4;
+				bc <= "111";
+			end if;
+		end if;
+	end if;
+
+end process;
+
+fit_best      <= fb;
+genotype_best <= gtb;
+gate_best     <= gb;
+phen_best     <= pb;
+best_code     <= bc;
+end rtl;

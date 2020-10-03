@@ -1,0 +1,29 @@
+-------------------------------------------------------
+--Baseado no código:
+-- Design Name : lfsr
+-- File Name   : lfsr.vhd
+-- Function    : Linear feedback shift register
+-- Coder       : Deepak Kumar Tala (Verilog)
+-- Translator  : Alexander H Pham (VHDL)
+-------------------------------------------------------
+library ieee;
+    use ieee.std_logic_1164.all;
+
+entity fixed_position is
+
+  generic(
+		
+		POSITION: std_logic_vector (4 downto 0):= "00001"
+	);
+
+  port (
+    cout   :out std_logic_vector (4 downto 0)-- Output of the counter
+  );
+end entity;
+
+architecture rtl of fixed_position is
+
+begin
+
+    cout <= POSITION;
+end architecture;

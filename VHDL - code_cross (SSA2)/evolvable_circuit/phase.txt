@@ -1,0 +1,80 @@
+-- Quartus II VHDL Template
+-- Vector evaluation VHDL Code
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity phase is
+
+generic
+(
+	LAYER_BITS   : natural := 22; --indica quantos bits tem na camada
+	FIT          : natural := 3;
+	PHEN         : natural := 4;
+	GATES        : natural := 5
+);
+
+	port 
+	(
+		clk          : in  STD_LOGIC;
+		phen_in      : in  STD_LOGIC_VECTOR(PHEN-1 downto 0);
+		phen_out     : out STD_LOGIC_VECTOR(PHEN-1 downto 0);
+		fit_in       : in  STD_LOGIC_VECTOR(FIT-1 downto 0);
+		fit_out      : out STD_LOGIC_VECTOR(FIT-1 downto 0);
+		gen_in       : in  STD_LOGIC_VECTOR(LAYER_BITS-1 downto 0);
+		gen_out      : out STD_LOGIC_VECTOR(LAYER_BITS-1 downto 0);
+		ngates_in    : in  STD_LOGIC_VECTOR(GATES-1 downto 0);
+		ngates_out   : out STD_LOGIC_VECTOR(GATES-1 downto 0);
+		teste        : out STD_LOGIC 
+	);
+
+end entity;
+
+architecture rtl of phase is
+
+SIGNAL gen_0 : STD_LOGIC_VECTOR(LAYER_BITS-1 downto 0) := "ZZZZZZZZZZZZZZZZZZZZZZ";
+SIGNAL gen_1 : STD_LOGIC_VECTOR(LAYER_BITS-1 downto 0) := "ZZZZZZZZZZZZZZZZZZZZZZ";
+SIGNAL gen_2 : STD_LOGIC_VECTOR(LAYER_BITS-1 downto 0) := "ZZZZZZZZZZZZZZZZZZZZZZ";
+
+SIGNAL phen_0 : STD_LOGIC_VECTOR(PHEN-1 downto 0) := "ZZZZ";
+SIGNAL phen_1 : STD_LOGIC_VECTOR(PHEN-1 downto 0) := "ZZZZ";
+
+SIGNAL ngates_0 : STD_LOGIC_VECTOR(GATES-1 downto 0) := "ZZZZZ";
+SIGNAL ngates_1 : STD_LOGIC_VECTOR(GATES-1 downto 0) := "ZZZZZ";
+
+SIGNAL test  : STD_LOGIC:='0';
+
+begin
+
+process (clk)
+
+begin
+
+
+	if (rising_edge(clk)) then
+	
+		gen_0 <= gen_1;
+		gen_1 <= gen_2;
+		gen_2 <= gen_in;
+		--
+		phen_0 <= phen_1;
+		phen_1 <= phen_in;
+		--
+	   ngates_0 <= ngates_1;
+		ngates_1 <= ngates_in;
+		--
+		test <= not test;
+				
+	end if;
+	
+end process;
+
+fit_out<= fit_in;
+gen_out<= gen_0;
+phen_out<= phen_0;
+ngates_out<= ngates_0;
+teste <= test;
+
+end rtl;
