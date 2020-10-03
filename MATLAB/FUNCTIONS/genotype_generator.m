@@ -2,8 +2,8 @@
 %  | Author: Bernardo G.P. Cunha                                |
 %  | Function Name: genotype_generator                          |
 %  | Function Purpose: generate a random vector of 22 positions |
-%  | Input: index (n)                                 |
-%  | Output: Genotype                                   |
+%  | Input: index (n)                                           |
+%  | Output: Genotype                                           |
 %  +------------------------------------------------------------+
 
 function [genotype] = genotype_generator(n)
